@@ -35,7 +35,7 @@ int main(int argc,char *argv[]){
 
     if(close(in_fd) == -1 || close(out_fd) == -1)
         oops("Error closing files","");
-    //puts("");
+    puts("");
     return 0;
 }
 

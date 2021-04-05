@@ -59,9 +59,11 @@ step5: Write your own who command!
 #include <stdlib.h>
 #include<utmp.h>
 #include<fcntl.h>
+#include<time.h>
 
 #define SHOWHOST 
 
+void show_time(time_t *);
 void show_info(struct utmp * ut);
 
 int main(){
@@ -83,13 +85,23 @@ int main(){
     return 0;
 }
 
+void show_time(time_t* t){
+    char *cp = ctime((const time_t *)&t);
+    printf("%12.12s",cp+4);
+}
+
 
 void show_info(struct utmp * ut){
-    printf("% -8.8s",   ut->ut_user);
-    printf("tty% -8.8s",ut->ut_line);
+
+    if(ut->ut_type!=USER_PROCESS) return;
+
+    printf("%-8.8s",   ut->ut_user);
+    printf("tty%-8.8s",ut->ut_line);
+
+    show_time((time_t *)ut->ut_tv.tv_sec);
 
     #ifdef SHOWHOST
-    printf("(%s", ut->ut_host);
+    printf("   (%s", ut->ut_host);
     #endif
     puts("");
 }

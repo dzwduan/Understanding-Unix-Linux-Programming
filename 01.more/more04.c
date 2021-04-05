@@ -1,7 +1,6 @@
 /*
-more03.c will change terminal stty mode through a shell command.
-It will influences subsequent programs and commands.
-This version gives a solution uses tcgetattr() and tcsetattr()
+上一个版本由于会改变命令行模式,影响后面的代码
+所以要改为临时切换模式，切换完成后再换回去
 */
 
 #include<stdio.h>
@@ -17,7 +16,9 @@ void set_noncanonical();
 
 int main(int argc, char *argv[])
 {
+    //保存模式
     tty_save_and_restore(0);
+    //设置模式
     set_noncanonical();
     FILE *fp;
     if(argc == 1)
@@ -31,10 +32,12 @@ int main(int argc, char *argv[])
                 fclose(fp);
             }
         }
+    //恢复模式
     tty_save_and_restore(1);
     return 0;
 }
 
+//TCSANOW   The change occurs immediately.
 void tty_save_and_restore(int option)
 {
     static struct termios original_mode;
