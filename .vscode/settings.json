@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "cstdlib": "c",
+        "limits": "cpp"
+    },
+    "python.pythonPath": "/usr/bin/python3"
+}

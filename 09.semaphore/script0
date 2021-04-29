@@ -1,0 +1,8 @@
+#this is called script0
+#first chmod +x script0 then run it directly
+
+ls 
+echo the current time is
+date
+echo my name is
+whoami
